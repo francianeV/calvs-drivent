@@ -1,10 +1,9 @@
-import {  TicketTypeEntity } from "@/protocols";
 import { invalidDataError, notFoundError } from "@/errors";
 import ticketsRepository from "@/repositories/tickets-repository";
 import enrollmentRepository from "@/repositories/enrollment-repository";
 import { Ticket } from "@prisma/client";
 
-async function getTicketTypes(): Promise<TicketTypeEntity[]> {
+async function getTicketTypes() {
   return await ticketsRepository.findTicketTypes();
 }
 

@@ -1,7 +1,7 @@
-import { invalidDataError, notFoundError, unauthorizedError } from "@/errors";
 import paymentsRepository from "@/repositories/payments-repository";
 import ticketsRepository from "@/repositories/tickets-repository";
 import enrollmentsRepository from "@/repositories/enrollment-repository";
+import { invalidDataError, notFoundError, unauthorizedError } from "@/errors";
 import { Payment } from "@prisma/client";
 
 async function getPayment(ticketId: number, userId: number) {
@@ -25,19 +25,6 @@ async function getPayment(ticketId: number, userId: number) {
 
   return payment;
 }
-
-type BodyCard = {
-  ticketId: number;
-  cardData: CardData;
-};
-
-type CardData = {
-  issuer: string;
-  number: number;
-  name: string;
-  expirationDate: Date;
-  cvv: number;
-};
 
 async function postPayment(body: BodyCard, userId: number) {
   if (!body.ticketId) {
@@ -74,14 +61,28 @@ async function postPayment(body: BodyCard, userId: number) {
   };
 
   await ticketsRepository.updateTicket(ticket.id);
+  
   const payment = await paymentsRepository.insertPayment(paymentData);
 
   return payment;
 }
 
+type BodyCard = {
+  ticketId: number;
+  cardData: CardData;
+};
+
+type CardData = {
+  issuer: string;
+  number: number;
+  name: string;
+  expirationDate: Date;
+  cvv: number;
+};
+
 const paymentsService = {
   getPayment,
-  postPayment,
+  postPayment
 };
 
 export default paymentsService;

@@ -3,7 +3,7 @@ import paymentsService from "@/services/payments-service";
 import { Response } from "express";
 import httpStatus from "http-status";
 
-export async function listPayment(req: AuthenticatedRequest, res: Response) {
+export async function getPayment(req: AuthenticatedRequest, res: Response) {
   const ticketId = req.query.ticketId;
   const { userId } = req;
 
@@ -45,3 +45,4 @@ export async function postPayment(req: AuthenticatedRequest, res: Response) {
     return res.sendStatus(httpStatus.NO_CONTENT);
   }
 }
+
